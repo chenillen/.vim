@@ -1,4 +1,4 @@
-This is the current state of @mikkel and my .vim folder.
+This is the current state of @chenillen and my .vim folder.
 
 This is part of a bigger dotfiles project tailored to dvorak keyboard users.
 
