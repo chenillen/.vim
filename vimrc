@@ -41,6 +41,7 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-bundler'
 Plugin 'tsaleh/vim-tmux'
 Plugin 'vim-scripts/Gummybears'
 Plugin 'vim-scripts/UltiSnips'
@@ -99,6 +100,8 @@ set autoindent                      " set automatic code indentation
 set hidden                          " allow background buffers w/out writing
 
 set nowrap                          " don't wrap lines
+
+set nu ai sw=2 sts=2 expandtab      " autoindent with two spaces, always expand tabs
 
 set list                            " show hidden characters
 set listchars=tab:\ \ ,trail:·      " show · for trailing space, \ \ for trailing tab
@@ -202,3 +205,24 @@ let g:rbpt_colorpairs = [
     \ ['red',         'firebrick3'],
     \ ]
 let g:slime_target = "tmux"
+
+" change C-w to ',' navigation easier between windows
+let mapleader=","
+nmap <Leader>j <C-w>j
+nmap <Leader>k <C-w>k
+nmap <Leader>h <C-w>h
+nmap <Leader>l <C-w>l
+
+" auto complete {} indent and position the cursor in the middle line
+inoremap {<CR>  {<CR>}<Esc>O
+inoremap (<CR>  (<CR>)<Esc>O
+inoremap [<CR>  [<CR>]<Esc>O
+
+" pull word under cursor into lhs of a substitute (for quick search and replace)
+nmap <leader>r :%s#\<<C-r>=expand("<cword>")<CR>\>#
+
+" just type cl<space>  to get console.log('<cursor stays here');
+ia cl console.log('');<Left><Left><Left><C-R>=Eatchar('\s')<CR>
+
+" auto remove whitespace
+autocmd BufWritePre * :%s/\s\+$//e
