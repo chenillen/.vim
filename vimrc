@@ -99,7 +99,7 @@ set expandtab                       " use spaces, not tabs
 set autoindent                      " set automatic code indentation
 set hidden                          " allow background buffers w/out writing
 
-set nowrap                          " don't wrap lines
+set wrap                            " wrap lines, I LIKE IT
 
 set nu ai sw=2 sts=2 expandtab      " autoindent with two spaces, always expand tabs
 
