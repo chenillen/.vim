@@ -40,6 +40,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-rails'
 Plugin 'tsaleh/vim-tmux'
 Plugin 'vim-scripts/Gummybears'
 Plugin 'vim-scripts/UltiSnips'
@@ -128,136 +129,6 @@ endif
 "set foldmethod=indent            " most files are evenly indented
 "set foldlevel=99
 
-" ADDITIONAL KEY MAPPINGS
-
-" fast saving
-nmap <leader>w :up<cr>
-
-" fast escaping
-imap jj <ESC>
-
-" prevent accidental striking of F1 key
-map <F1> <ESC>
-imap <F1> <ESC>
-
-" clear highlight
-nnoremap <leader><space> :noh<cr>
-
-" map Y to match C and D behavior
-nnoremap Y y$
-
-" yank entire file (global yank)
-nmap gy ggVGy
-
-" ignore lines when going up or down
-nnoremap j gj
-nnoremap k gk
-
-" auto complete {} indent and position the cursor in the middle line
-inoremap {<CR>  {<CR>}<Esc>O
-inoremap (<CR>  (<CR>)<Esc>O
-inoremap [<CR>  [<CR>]<Esc>O
-
-" fast window switching
-map <leader>, <C-W>w
-map <leader>t :CtrlP<cr>
-map <leader>b :CtrlPBuffer<cr>
-map <leader>m :CtrlPMRU<cr>
-
-" cycle between buffers
-map <leader>. :b#<cr>
-
-" change directory to current buffer
-map <leader>cd :cd %:p:h<cr>
-
-" open file explorer
-map <leader>n :NERDTreeToggle<cr>
-
-" open selected file in nerdtree
-map <leader>h :NERDTreeFind<cr>
-
-" swap implementations of ` and ' jump to prefer row and column jumping
-nnoremap ' `
-nnoremap ` '
-
-" indent visual selected code without unselecting and going back to normal mode
-vmap > >gv
-vmap < <gv
-" indent visually with the < > keys, but without shift held.
-vmap . >gv
-vmap , <gv
-setglobal relativenumber
-
-"set foldcolumn=8
-
-" Screw ex mode
-:map Q <Nop>
-
-" copy/paste to/from x clipboard
-vmap <leader>y :!xclip -f -sel clip<cr>
-map <leader>p :r!xclip -o<cr>
-
-" pull word under cursor into lhs of a substitute (for quick search and replace)
-nmap <leader>r :%s#\<<C-r>=expand("<cword>")<CR>\>#
-
-" strip all trailing whitespace in the current file
-nnoremap <leader>W :%s/\s\+$//e<cr>:let @/=''<CR>
-
-" insert path of current file into a command
-cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-
-" fast editing of the .vimrc
-nmap <silent> <leader>ev :e $MYVIMRC<cr>
-nmap <silent> <leader>sv :so $MYVIMRC<cr>
-
-" allow saving when you forgot sudo
-cmap w!! w !sudo tee % >/dev/null
-
-" turn on spell checking
-map <leader>spl :setlocal spell!<cr>
-
-" spell checking shortcuts
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
-" window
-nmap <leader>sw<left>  :topleft  vnew<CR>
-nmap <leader>sw<right> :botright vnew<CR>
-nmap <leader>sw<up>    :topleft  new<CR>
-nmap <leader>sw<down>  :botright new<CR>
-" buffer
-nmap <leader>s<left>   :leftabove  vnew<CR>
-nmap <leader>s<right>  :rightbelow vnew<CR>
-nmap <leader>s<up>     :leftabove  new<CR>
-nmap <leader>s<down>   :rightbelow new<CR>
-
-
-
-"" ADDITIONAL AUTOCOMMANDS
-
-" saving when focus lost (after tabbing away or switching buffers)
-au FocusLost,BufLeave,WinLeave,TabLeave * silent! up
-
-" open in last edit place
-au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
-au QuickFixCmdPost *grep* cwindow
-
-"" ABBREVIATIONS
-" source $HOME/.vim/autocorrect.vim
-
-"" PLUGIN SETTINGS
-
-let g:netrw_liststyle=3  " use tree style for netrw
-
-" Unimpaired
-" bubble single lines
-nmap <C-Up> [e
-nmap <C-Down> ]e
-" bubble multiple lines
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
 
 " Powerline
 let g:Powerline_symbols = 'fancy'
@@ -298,61 +169,14 @@ let g:user_zen_settings = {
 \    },
 \    'gsp' : {
 \        'extends' : 'html',
+\    },
+\    'html.erb' : {
+\        'extends' : 'html',
 \    }
 \}
 
-let g:use_zenabbr_key = '-'
-set relativenumber
-
-
-set shortmess=atI
-set tildeop
-
-:helptags ~/.vim/doc
-map <silent> <F3> :call BufferList() <CR>
-"Ctrl P
-noremap <C-t> :CtrlP <CR>
-
-" autoindent with two spaces, always expand tabs
-set nu ai sw=2 sts=2 expandtab
-
-au! BufRead,BufNewFile *.haml         setfiletype haml
-au! BufRead,BufNewFile *.ftl         setfiletype ftl
-
-set ts=2
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-set showmode
-
-func Eatchar(pat)
-  let c = nr2char(getchar(0))
-  return (c =~ a:pat) ? '' : c
-endfunc
-
-" just type cl<space>  to get console.log('<cursor stays here');
-ia cl console.log('');<Left><Left><Left><C-R>=Eatchar('\s')<CR>
-set number
-set numberwidth=5
-
-let g:EasyMotion_leader_key = "'"
-
-map <space> 'w
-
-"au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|.sass-cache\|.ivy-cache\'
-
-syntax enable
-colorscheme gummybears
-
-if exists('+colorcolumn')
-  set colorcolumn=120              " show a right margin column
-  hi ColorColumn ctermbg=234 guibg=#1c1c1c
-endif
-
-let NERDTreeMapOpenInTab='\t'
-
-noremap <C-p> <PageUp>
-noremap <C-n> <PageDown>
+"Root permission on a file inside VIM
+cmap w!! w !sudo tee >/dev/null %
 
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
