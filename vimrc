@@ -42,6 +42,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-bundler'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'tsaleh/vim-tmux'
 Plugin 'vim-scripts/Gummybears'
 Plugin 'vim-scripts/UltiSnips'
@@ -51,6 +52,7 @@ Plugin 'wavded/vim-stylus'
 Plugin 'wincent/Command-T'
 Plugin 'jnwhiteh/vim-golang'
 Plugin 'laurentgoudet/vim-howdoi.git'
+Plugin 'isRuslan/vim-es6'
 
 syntax enable                       " enable syntax highlighting
 set encoding=utf8                   " utf8 default encoding
@@ -110,7 +112,7 @@ set noeb vb t_vb=                   " disable audio and visual bells
 
 set t_Co=256                        " use 256 colors
 set background=light
-colorscheme jellybeans                 " terminal theme
+colorscheme ir_black                " my favorite terminal theme
 map <m-a> ggVG
 
 if has("gui_running")
@@ -186,25 +188,25 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['lightblue',    'SeaGreen3'],
-    \ ['lightgray',    'lightOrchid3'],
-    \ ['lightgreen',   'firebrick3'],
-    \ ['lightcyan',    'RoyalBlue3'],
-    \ ['lightred',     'SeaGreen3'],
-    \ ['lightmagenta', 'lightOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['lightmagenta', 'lightOrchid3'],
-    \ ['lightblue',    'firebrick3'],
-    \ ['lightgreen',   'RoyalBlue3'],
-    \ ['lightcyan',    'SeaGreen3'],
-    \ ['lightred',     'lightOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:slime_target = "tmux"
+" let g:rbpt_colorpairs = [
+"     \ ['brown',       'RoyalBlue3'],
+"     \ ['lightblue',    'SeaGreen3'],
+"     \ ['lightgray',    'lightOrchid3'],
+"     \ ['lightgreen',   'firebrick3'],
+"     \ ['lightcyan',    'RoyalBlue3'],
+"     \ ['lightred',     'SeaGreen3'],
+"     \ ['lightmagenta', 'lightOrchid3'],
+"     \ ['brown',       'firebrick3'],
+"     \ ['gray',        'RoyalBlue3'],
+"     \ ['black',       'SeaGreen3'],
+"     \ ['lightmagenta', 'lightOrchid3'],
+"     \ ['lightblue',    'firebrick3'],
+"     \ ['lightgreen',   'RoyalBlue3'],
+"     \ ['lightcyan',    'SeaGreen3'],
+"     \ ['lightred',     'lightOrchid3'],
+"     \ ['red',         'firebrick3'],
+"     \ ]
+" let g:slime_target = "tmux"
 
 " change C-w to ',' navigation easier between windows
 let mapleader=","
@@ -226,3 +228,11 @@ ia cl console.log('');<Left><Left><Left><C-R>=Eatchar('\s')<CR>
 
 " auto remove whitespace
 autocmd BufWritePre * :%s/\s\+$//e
+
+function! StartUp()
+  if 0 == argc()
+    NERDTree
+  end
+endfunction
+
+" autocmd VimEnter * call StartUp()
